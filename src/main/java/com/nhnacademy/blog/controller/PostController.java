@@ -1,11 +1,10 @@
 package com.nhnacademy.blog.controller;
 
 import com.nhnacademy.blog.domain.Post;
-import com.nhnacademy.blog.exception.CreatePostFailedException;
-import com.nhnacademy.blog.exception.UpdateIsFailedException;
 import com.nhnacademy.blog.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,8 +18,11 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping("/posts")
-    public List<Post> getPosts() {
-        return postService.getPosts();
+    public String getPosts(Model model) {
+        List<Post> postList = postService.getPosts();
+        log.info("Post List count is: {}", postList.size());
+        model.addAttribute("postList", postList);
+        return "posts";
     }
 
     @GetMapping("/{postKey}")
@@ -31,11 +33,7 @@ public class PostController {
     @PostMapping("/create")
     public Post createPost(Post post) {
         Post createdPost = postService.createPost(post);
-
-        if (createdPost == null) {
-            throw new CreatePostFailedException();
-        }
-
+        log.info("Created post: {}", createdPost);
         return createdPost;
     }
 
@@ -51,13 +49,8 @@ public class PostController {
 
     @PostMapping("/update")
     public Post updatePostByPostTitleAndUserEmail(String title, String userEmail, Post post) {
-        Post before = postService.findPostByTitle(title);
         Post updatePost = postService.updatePostByPostTitleAndUserEmail(title, userEmail, post);
-
-        if (before.equals(updatePost)) {
-            throw new UpdateIsFailedException();
-        }
-
+        log.info("Update post title is: {}", updatePost.getTitle());
         return updatePost;
     }
 }

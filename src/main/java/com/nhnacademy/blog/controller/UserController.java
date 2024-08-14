@@ -2,8 +2,11 @@ package com.nhnacademy.blog.controller;
 
 import com.nhnacademy.blog.domain.User;
 import com.nhnacademy.blog.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.Banner;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.nhnacademy.blog.exception.*;
 
@@ -13,62 +16,67 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Slf4j
+//TODO method 이름 고민
 public class UserController {
-
     private final UserService userService;
 
     @GetMapping("/{userEmail}")
-    public User findByUserEmail(@PathVariable String userEmail) {
+    public String findByUserEmail(Model model, @PathVariable String userEmail) {
         User user = userService.findByUserEmail(userEmail);
-        if (user == null) {
-            throw new UserNotFoundException(userEmail);
-        }
+        model.addAttribute("user", user);
         log.info("User controller find by user email result is : {}", user);
-        return user;
+        return "user";
     }
 
     @GetMapping("/users")
-    public List<User> findAll() {
+    public String findAll(Model model) {
         List<User> users = userService.findAll();
-        if (users == null) {
-            throw new UsersNotExistException();
-        }
-
+        model.addAttribute("users", users);
         log.info("User controller find all users result is : {}", users);
-        return users;
+        return "users";
     }
 
     @PostMapping("/create")
-    public User createUser(User user) {
+    public String createUser(Model model, User user) {
         log.info("User controller create user method in : {}", user);
-        return userService.createUser(user);
+        User createUser = userService.createUser(user);
+        model.addAttribute("user", createUser);
+
+        return "login";
     }
 
-    @GetMapping("/login")
-    public User findByUserEmailAndPassword(String userEmail, String password) {
+    @PostMapping("/login")
+    public String login(HttpSession session, Model model, @RequestParam String userEmail, @RequestParam String password) {
         User user = userService.findByUserEmailAndPassword(userEmail, password);
-        if (user == null) {
-            throw new UserNotFoundException(userEmail, password);
-        }
-
         log.info("User controller find by user email result is : {}", user);
-        return user;
+
+        if (user == null) {
+            model.addAttribute("error", "Invalid user email or password");
+            return "login";
+        } else {
+            session.setAttribute("user", user);
+            return "redirect:/Main";
+        }
     }
 
     @DeleteMapping
-    public void deleteByUserEmail(String userEmail) {
+    public String deleteByUserEmail(String userEmail) {
         log.info("User controller delete user method in : {}", userEmail);
         userService.deleteByUserEmail(userEmail);
+        return "redirect:/users";
     }
 
     @PostMapping("/update")
-    public User updateUserPasswordByUserEmailAndUserPassword(String userEmail, String password, User user) {
-        if (userService.findByUserEmailAndPassword(userEmail, password) == null) {
-            throw new UserNotFoundException(userEmail, password);
-        } else {
+    public String updateUserPasswordByUserEmailAndUserPassword(Model model, String userEmail, String password, User user) {
+        User updateUser = userService.updateUserPasswordByUserEmailAndUserPassword(userEmail, password, user);
+        log.info("User controller update user password by user email result is : {}", user);
+        model.addAttribute("user", updateUser);
+        return "Main";
+    }
 
-            log.info("User controller update user password by user email result is : {}", user);
-            return userService.updateUserPasswordByUserEmailAndUserPassword(userEmail, password, user);
-        }
+    @PostMapping("/logout")
+    private String logout(HttpSession session) {
+        session.invalidate();
+        return "Login";
     }
 }
