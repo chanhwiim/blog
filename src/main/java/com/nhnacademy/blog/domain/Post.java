@@ -1,0 +1,25 @@
+package com.nhnacademy.blog.domain;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "post")
+@Entity
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_key", nullable = false)
+    private Long postKey;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(name = "content", nullable = false)
+    private String content;
+}
