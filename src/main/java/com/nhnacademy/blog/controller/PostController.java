@@ -26,8 +26,10 @@ public class PostController {
     }
 
     @GetMapping("/{postKey}")
-    public Post getPost(@PathVariable Long postKey) {
-        return postService.getPost(postKey);
+    public String getPost(Model model, @PathVariable Long postKey) {
+        Post post = postService.getPost(postKey);
+        model.addAttribute("post", post);
+        return "post";
     }
 
     @PostMapping("/create")

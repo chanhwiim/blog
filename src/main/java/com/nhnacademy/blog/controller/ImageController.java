@@ -46,7 +46,7 @@ public class ImageController {
         String locate = imageService.findImageLocate(id);
         log.info("image locate is : {}", locate);
         model.addAttribute("imageLocate", locate);
-        return locate;
+        return "image";
     }
 
     @DeleteMapping

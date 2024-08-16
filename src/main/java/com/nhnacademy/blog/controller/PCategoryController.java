@@ -43,22 +43,32 @@ public class PCategoryController {
     }
 
     @PostMapping
-    private PCategory save(PCategory category){
-        return pCategoryService.save(category);
+    private String save(Model model, PCategory category){
+        PCategory pCategory = pCategoryService.save(category);
+        model.addAttribute("pCategory", pCategory);
+        log.info("pCategory: {}", pCategory);
+        return "pCategories";
     }
 
     @PostMapping("/save/{parentId}")
-    private PCategory saveLowLevel(PCategory category,@PathVariable String parentId){
-        return pCategoryService.saveLowLevel(category, parentId);
+    private String saveLowLevel(Model model, PCategory category,@PathVariable String parentId){
+        PCategory pCategory = pCategoryService.saveLowLevel(category, parentId);
+        model.addAttribute("pCategory", pCategory);
+        return "pCategories";
     }
 
     @PostMapping("/update")
-    private PCategory updatePCategoryFromIdAndName(Long id, String name, PCategory category){
-        return pCategoryService.updatePCategoryFromIdAndName(id, name, category);
+    private String updatePCategoryFromIdAndName(Model model, Long id, String name, PCategory category){
+        PCategory pCategory = pCategoryService.updatePCategoryFromIdAndName(id, name, category);
+        model.addAttribute("pCategory", pCategory);
+        log.info("pCategory: {}", pCategory);
+        return "pCategory";
     }
 
     @DeleteMapping
-    private void delete(PCategory category){
+    private String delete(PCategory category){
         pCategoryService.delete(category);
+        log.info("Class: PCategoryController.delete");
+        return "pCategories";
     }
 }
