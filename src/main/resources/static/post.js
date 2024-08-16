@@ -21,3 +21,5 @@ window.onload = function () {
         window.location.href = "/deletePost";
     }
 }
+
+// TODO onload가 아닌 event listener로 수정
