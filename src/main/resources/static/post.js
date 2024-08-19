@@ -1,4 +1,4 @@
-window.onload = function () {
+document.addEventListener("DOMContentLoaded",function () {
     let userLoggedIn = /*[[${user != null}]]*/ false;
 
     if (userLoggedIn) {
@@ -9,17 +9,17 @@ window.onload = function () {
         document.getElementById("loginForm").style.display = "inline";
     }
 
-    document.getElementById("Create").onclick = function () {
+    document.getElementById("Create").addEventListener("click",function () {
         window.location.href = "/CreatePost";
-    }
+    });
 
-    document.getElementById("Edit").onclick = function () {
+    document.getElementById("Edit").addEventListener("click", function () {
         window.location.href = "/EditPost";
-    }
+    });
 
-    document.getElementById("Delete").onclick = function () {
+    document.getElementById("Delete").addEventListener("click", function () {
         window.location.href = "/deletePost";
-    }
-}
+    });
+});
 
 // TODO onload가 아닌 event listener로 수정
