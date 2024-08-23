@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "post_category")
 @Entity
-public class PostCategory {
+public class PostCategory implements BaseEntity {
 
     @Id
     @ManyToOne
