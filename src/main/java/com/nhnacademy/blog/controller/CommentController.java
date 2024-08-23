@@ -4,13 +4,14 @@ import com.nhnacademy.blog.domain.Comment;
 import com.nhnacademy.blog.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/comment")
 @Slf4j
 public class CommentController {
@@ -18,7 +19,7 @@ public class CommentController {
     private final CommentService commentService;
 
     @GetMapping("/comments")
-    private String findAll(Model model) {
+    public String findAll(Model model) {
         List<Comment> comments = commentService.findAll();
         log.info("Found {} comments", comments.size());
         model.addAttribute("comments", comments);
@@ -26,7 +27,7 @@ public class CommentController {
     }
 
     @GetMapping("/{commentKey}")
-    private String findCommentByKey(Model model,@PathVariable long commentKey) {
+    public String findCommentByKey(Model model,@PathVariable long commentKey) {
         Comment comment = commentService.findCommentByKey(commentKey);
         log.info("Found comment {}", comment);
         model.addAttribute("comment", comment);
@@ -34,7 +35,7 @@ public class CommentController {
     }
 
     @PostMapping("/save")
-    private String save(Model model, Comment comment) {
+    public String save(Model model, Comment comment) {
         Comment savedComment = commentService.save(comment);
         log.info("Saved comment {}", savedComment);
         model.addAttribute("comment", savedComment);
@@ -42,7 +43,7 @@ public class CommentController {
     }
 
     @PostMapping
-    private String updateCommentByCommentKey(Model model, Long commentKey, Comment comment) {
+    public String updateCommentByCommentKey(Model model, Long commentKey, Comment comment) {
         Comment updatedComment = commentService.updateCommentByCommentKey(commentKey, comment);
         log.info("Updated comment {}", updatedComment);
         model.addAttribute("comment", updatedComment);
@@ -50,7 +51,7 @@ public class CommentController {
     }
 
     @DeleteMapping
-    private String deleteByKey(long commentKey) {
+    public String deleteByKey(long commentKey) {
         commentService.deleteByKey(commentKey);
         return "redirect:/comments";
     }

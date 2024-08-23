@@ -5,15 +5,14 @@ import com.nhnacademy.blog.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.Banner;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.nhnacademy.blog.exception.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/user")
 @Slf4j
 //TODO method 이름 고민

@@ -5,13 +5,14 @@ import com.nhnacademy.blog.service.PCategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.Banner;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @Slf4j
 @RequestMapping("/p_category")
 public class PCategoryController {
@@ -19,7 +20,7 @@ public class PCategoryController {
     private final PCategoryService pCategoryService;
 
     @GetMapping("/pCategories")
-    private String findAll(Model model){
+    public String findAll(Model model){
         List<PCategory> pCategories = pCategoryService.findAll();
         model.addAttribute("pCategories", pCategories);
         log.info("pCategories: {}", pCategories.size());
@@ -35,7 +36,7 @@ public class PCategoryController {
     }
 
     @GetMapping("/name/{name}")
-    private String findByName(Model model, @PathVariable String name){
+    public String findByName(Model model, @PathVariable String name){
         PCategory pCategory = pCategoryService.findByName(name);
         model.addAttribute("pCategory" ,pCategory);
         log.info("pCategory: {}", pCategory);
@@ -43,7 +44,7 @@ public class PCategoryController {
     }
 
     @PostMapping
-    private String save(Model model, PCategory category){
+    public String save(Model model, PCategory category){
         PCategory pCategory = pCategoryService.save(category);
         model.addAttribute("pCategory", pCategory);
         log.info("pCategory: {}", pCategory);
@@ -51,14 +52,14 @@ public class PCategoryController {
     }
 
     @PostMapping("/save/{parentId}")
-    private String saveLowLevel(Model model, PCategory category,@PathVariable String parentId){
+    public String saveLowLevel(Model model, PCategory category,@PathVariable String parentId){
         PCategory pCategory = pCategoryService.saveLowLevel(category, parentId);
         model.addAttribute("pCategory", pCategory);
         return "pCategories";
     }
 
     @PostMapping("/update")
-    private String updatePCategoryFromIdAndName(Model model, Long id, String name, PCategory category){
+    public String updatePCategoryFromIdAndName(Model model, Long id, String name, PCategory category){
         PCategory pCategory = pCategoryService.updatePCategoryFromIdAndName(id, name, category);
         model.addAttribute("pCategory", pCategory);
         log.info("pCategory: {}", pCategory);
@@ -66,7 +67,7 @@ public class PCategoryController {
     }
 
     @DeleteMapping
-    private String delete(PCategory category){
+    public String delete(PCategory category){
         pCategoryService.delete(category);
         log.info("Class: PCategoryController.delete");
         return "pCategories";

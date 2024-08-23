@@ -4,13 +4,14 @@ import com.nhnacademy.blog.domain.Image;
 import com.nhnacademy.blog.service.ImageService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
+@Controller
 @RequestMapping("/image")
 @Slf4j
 public class ImageController {
