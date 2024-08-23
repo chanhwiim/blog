@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BCategoryRepository extends JpaRepository<BCategory, Long> {
 
-    BCategory updateBCategoryByCategoryId(Long bCategoryId, BCategory bCategory);
+    BCategory updateBCategoryByBCategoryId(Long bCategoryId, BCategory bCategory);
 }
