@@ -33,7 +33,7 @@ public class BCategoryServiceImpl implements BCategoryService {
 
     @Override
     public BCategory updateCategoryById(Long bCategoryId, BCategory bCategory) {
-        return bCategoryRepository.updateBCategoryByCategoryId(bCategoryId, bCategory);
+        return bCategoryRepository.updateBCategoryByBCategoryId(bCategoryId, bCategory);
     }
 
     @Override
