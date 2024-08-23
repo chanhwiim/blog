@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "p_category")
 @Entity
-public class PCategory {
+public class PCategory implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_category_id", nullable = false)
-    private Long categoryId;
+    private Long pCategoryId;
 
     @Column(name = "category_name", nullable = false)
     private String categoryName;

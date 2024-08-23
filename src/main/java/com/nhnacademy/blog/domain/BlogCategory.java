@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name = "blog_category")
 @Entity
-public class BlogCategory {
+public class BlogCategory implements BaseEntity{
 
     @Id
     @ManyToOne

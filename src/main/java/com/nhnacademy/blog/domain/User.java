@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @Builder
 @Table(name = "user")
-public class User {
+public class User implements BaseEntity {
 
     @Id
     @Column(name = "user_email", nullable = false)
@@ -25,9 +25,9 @@ public class User {
     private String userPassword;
 
     @Column(name = "created_at", nullable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    private Boolean state;
+    private Boolean state = Boolean.FALSE;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;

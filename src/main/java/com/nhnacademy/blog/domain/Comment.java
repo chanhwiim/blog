@@ -11,7 +11,7 @@ import com.nhnacademy.blog.domain.User;
 @NoArgsConstructor
 @Entity
 @Table(name = "comment")
-public class Comment {
+public class Comment implements BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
